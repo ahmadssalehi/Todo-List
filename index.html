@@ -4,23 +4,67 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>TodoListApp</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="main.js" defer></script>
 	</head>
-	<body>
+	<body class="bg-gray-100 font-mono">
 		<header>
-			<div>
-				<h1>Simple To-do List for complicated life</h1>
-			</div>
+			<h1 class="text-gray-800 m-44 mb-10 text-5xl font-bold">
+				"Simple To-do List for complicated life."
+			</h1>
 		</header>
-		<nav>
-			<ul>
-				<li>All Tasks</li>
-				<li>Calender</li>
-				<li>Login</li>
-			</ul>
-		</nav>
+
 		<main>
-			<section></section>
-			<aside></aside>
+			<button
+				type="button"
+				title="nav-btn"
+				class="nav-btn m-4 px-4 py-2 z-50 fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg"
+			>
+				<svg
+					class="w-6 h-6"
+					clip-rule="evenodd"
+					fill-rule="evenodd"
+					stroke-linejoin="round"
+					stroke-miterlimit="2"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
+						fill-rule="nonzero"
+					/>
+				</svg>
+			</button>
+
+			<div id="backdrop" class="hidden fixed inset-0 bg-black/50 z-30"></div>
+
+			<div
+				class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-40"
+			>
+				<ul class="flex flex-col justify-center gap-2 mt-24 ml-8">
+					<li class="text-gray-700"><a href="#">All Tasks</a></li>
+					<li class="text-gray-700"><a href="#">Calender</a></li>
+					<li class="text-gray-700"><a href="#">Login</a></li>
+				</ul>
+			</div>
+			<div class="max-w-md mx-auto p-4">
+				<h2 class="text-xl font-bold mb-4">ToDo List</h2>
+
+				<div class="flex mb-8">
+					<input
+						type="text"
+						placeholder="Write a new task"
+						class="task-input flex-grow border rounded px-3 py-2 text-gray-100"
+					/>
+					<button
+						class="add-task-btn bg-blue-500 text-white px-4 rounded ml-2 hover:bg-blue-600"
+					>
+						Add
+					</button>
+				</div>
+
+				<ul class="task-list list-disc pl-5 space-y-2"></ul>
+			</div>
 		</main>
 		<footer></footer>
 	</body>
