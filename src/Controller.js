@@ -1,57 +1,36 @@
 import * as Model from '/src/model.js';
 import { View } from '/src/view.js';
+import { LoginView } from '/src/LoginView.js';
+import { LoginController } from '/src/LoginController.js';
 
+const loginView = new LoginView();
+const loginController = new LoginController(loginView);
 export class Controller {
 	constructor() {
 		this.model = Model;
 		this.view = new View();
-		this.navBtn = document.querySelector('.nav-btn');
-		this.sidebar = document.querySelector('.sidebar');
-		this.backdrop = document.querySelector('.backdrop');
 
 		this.view.bindAdd(this.handleAdd);
 		this.view.bindToggle(this.handleToggle);
 		this.view.bindRemove(this.handleRemove);
+		this.view.bindCategoryFocus(this.handleCategoryFocus);
 
 		this.render();
-		this.navController();
+		this.hideSuggestionsController();
+		this.setupSidebarEvents();
 	}
-
-	navController = () => {
-		this.navBtn.addEventListener('click', (e) => {
-			this.sidebar.classList.toggle('-translate-x-full');
-			this.sidebar.classList.toggle('translate-x-0');
-			this.backdrop.classList.toggle('hidden');
-			e.stopPropagation();
-		});
-
-		this.sidebar.onclick = (e) => e.stopPropagation();
-
-		document.onclick = ({ target }) => {
-			const sidebarOpen = this.sidebar.classList.contains('translate-x-0');
-			const clickedInsideSidebarOrBtn =
-				target.closest('.sidebar') || target.closest('.nav-btn');
-
-			if (sidebarOpen && !clickedInsideSidebarOrBtn) {
-				this.sidebar.classList.add('-translate-x-full');
-				this.sidebar.classList.remove('translate-x-0');
-				this.backdrop.classList.add('hidden');
-			}
-		};
-	};
-
 	render = () => {
 		const tasks = this.model.loadTasks();
 		this.view.renderTasks(tasks);
 	};
 
-	handleAdd = (text) => {
+	handleAdd = (text, category) => {
 		const newTask = {
 			id: Date.now().toString(),
 			text,
 			completed: false,
 			date: new Date().toISOString(),
-			category: 'general',
+			category,
 		};
 		this.model.addTask(newTask);
 		this.render();
@@ -65,6 +44,36 @@ export class Controller {
 	handleRemove = (id) => {
 		this.model.removeTask(id);
 		this.render();
+	};
+	handleCategoryFocus = () => {
+		const tasks = this.model.loadTasks();
+		const categories = [
+			...new Set(tasks.map((task) => task.category).filter(Boolean)),
+		];
+		this.view.renderCategorySuggestions(categories);
+	};
+	setupSidebarEvents = () => {
+		this.view.bindToggleSidebar(this.handleOutsideSidebarClick);
+	};
+
+	handleOutsideSidebarClick = ({ target }) => {
+		const clickedInside =
+			target.closest('.sidebar') || target.closest('.nav-btn');
+		if (this.view.isSidebarOpen() && !clickedInside) {
+			this.view.closeSidebar();
+		}
+	};
+	hideSuggestionsController = () => {
+		document.addEventListener('click', (e) => {
+			const clickedInsideInput = e.target.closest('.task-category');
+			const clickedInsideSuggestions = e.target.closest(
+				'.category-suggestions'
+			);
+
+			if (!clickedInsideInput && !clickedInsideSuggestions) {
+				this.view.hideSuggestions();
+			}
+		});
 	};
 }
 

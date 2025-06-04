@@ -3,6 +3,11 @@ const STORAGE_KEY = 'tasks';
 export const loadTasks = () =>
 	JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
+// export const getUniqueCategories = () => {
+// 		const tasks = this.loadTasks();
+// 		const categories = tasks.map(task => task.category).filter(Boolean);
+// 		return [...new Set(categories)];
+// 	}
 export const saveTasks = (tasks) =>
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 
