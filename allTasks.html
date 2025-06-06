@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>All Tasks</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.cdnfonts.com/css/proxima-nova-2"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="/src/output.css" />
+		<script type="module" src="/src/Controller.js" defer></script>
+	</head>
+	<body class="font-Reg bg-gray-100">
+		<header>
+			<h1
+				class="text-gray-800 text-3xl sm:text-4xl md:text-5xl text-center mx-4 mt-24 mb-4"
+			>
+				All Tasks
+			</h1>
+		</header>
+
+		<main>
+			<button
+				type="button"
+				class="nav-btn m-4 px-2 py-2 z-50 fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer transition duration-300"
+			>
+				<svg
+					fill="currentColor"
+					class="w-6"
+					clip-rule="evenodd"
+					fill-rule="evenodd"
+					stroke-linejoin="round"
+					stroke-miterlimit="2"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
+						fill-rule="nonzero"
+					/>
+				</svg>
+			</button>
+
+			<div class="backdrop hidden fixed inset-0 bg-black/50 z-30"></div>
+
+			<div
+				class="sidebar fixed top-0 left-0 h-full w-32 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-40"
+			>
+				<ul class="flex flex-col ml-6 gap-2 mt-24">
+					<li class="text-gray-400 hover:text-gray-900 transition duration-300">
+						<a href="index.html">Home</a>
+					</li>
+					<li class="text-gray-400 hover:text-gray-900 transition duration-300">
+						<a href="/calendar.html">Calender</a>
+					</li>
+					<li
+						class="login-btn text-gray-400 hover:text-gray-900 transition duration-300"
+					>
+						<a href="#">Login</a>
+					</li>
+				</ul>
+			</div>
+            <ul class="task-list list-disc pl-5 space-y-2 mx-10"></ul>
+		</main>
+	</body>
+</html>

@@ -1,32 +1,48 @@
-const STORAGE_KEY = 'tasks';
+export class Model {
+	constructor(storageKey = 'tasks') {
+		this.storageKey = storageKey;
+		this.tasks = JSON.parse(localStorage.getItem(this.storageKey) || '{}');
+	}
 
-export const loadTasks = () =>
-	JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+	saveTask() {
+		localStorage.setItem(this.storageKey, JSON.stringify(this.tasks));
+	}
 
-// export const getUniqueCategories = () => {
-// 		const tasks = this.loadTasks();
-// 		const categories = tasks.map(task => task.category).filter(Boolean);
-// 		return [...new Set(categories)];
-// 	}
-export const saveTasks = (tasks) =>
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+	loadTasks(dateKey) {
+		return this.tasks[dateKey] || [];
+	}
 
-export const addTask = (task) => {
-	const tasks = loadTasks();
-	tasks.push(task);
-	saveTasks(tasks);
-};
+	loadAllTasks() {
+		return this.tasks;
+	}
 
-export const removeTask = (id) => {
-	let tasks = loadTasks();
-	tasks = tasks.filter((task) => task.id !== id);
-	saveTasks(tasks);
-};
+	addTask(dateKey, task) {
+		if (!this.tasks[dateKey]) this.tasks[dateKey] = [];
+		this.tasks[dateKey].push(task);
+		this.saveTask();
+	}
 
-export const toggleTask = (id) => {
-	let tasks = loadTasks();
-	tasks = tasks.map((task) =>
-		task.id === id ? { ...task, completed: !task.completed } : task
-	);
-	saveTasks(tasks);
-};
+	removeTask(dateKey, id) {
+		if (!this.tasks[dateKey]) return;
+		this.tasks[dateKey] = this.tasks[dateKey].filter((task) => task.id !== id);
+		if (this.tasks[dateKey].length === 0) delete this.tasks[dateKey];
+		this.saveTask();
+	}
+
+	toggleTask(dateKey, id) {
+		if (!this.tasks[dateKey]) return;
+		this.tasks[dateKey] = this.tasks[dateKey].map((task) =>
+			task.id === id ? { ...task, completed: !task.completed } : task
+		);
+		this.saveTask();
+	}
+
+	updateTask(dateKey, id, updates) {
+		// updates: { text?: string, category?: string, completed?: boolean }
+		if (!this.tasks[dateKey]) return;
+		this.tasks[dateKey] = this.tasks[dateKey].map((task) =>
+			task.id === id ? { ...task, ...updates } : task
+		);
+		this.saveTask();
+	}
+}

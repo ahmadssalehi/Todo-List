@@ -1,4 +1,3 @@
-// src/views/LoginView.js
 export class LoginView {
 	constructor() {
 		this.modal = document.querySelector('.login-modal');
@@ -23,21 +22,21 @@ export class LoginView {
 	}
 
 	bindOpenModal(handler) {
-		this.loginBtn.addEventListener('click', (e) => {
+		this.loginBtn?.addEventListener('click', (e) => {
 			e.stopPropagation();
 			handler();
 		});
 	}
 
 	bindCloseModal(handler) {
-		this.closeBtn.addEventListener('click', handler);
-		this.modal.addEventListener('click', (e) => {
+		this.closeBtn?.addEventListener('click', handler);
+		this.modal?.addEventListener('click', (e) => {
 			if (e.target === this.modal) handler();
 		});
 	}
 
 	bindSubmit(handler) {
-		this.form.addEventListener('submit', (e) => {
+		this.form?.addEventListener('submit', (e) => {
 			e.preventDefault();
 			handler(this.emailInput.value.trim(), this.passwordInput.value.trim());
 		});

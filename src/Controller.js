@@ -1,48 +1,68 @@
-import * as Model from '/src/model.js';
+import { Model } from '/src/model.js';
 import { View } from '/src/view.js';
-import { LoginView } from '/src/LoginView.js';
-import { LoginController } from '/src/LoginController.js';
+import { LoginView } from '/src/Login/LoginView.js';
+import { LoginController } from '/src/Login/LoginController.js';
 
 const loginView = new LoginView();
 const loginController = new LoginController(loginView);
 export class Controller {
 	constructor() {
-		this.model = Model;
+		this.model = new Model();
 		this.view = new View();
+		this.urlName = window.location.pathname;
 
 		this.view.bindAdd(this.handleAdd);
 		this.view.bindToggle(this.handleToggle);
 		this.view.bindRemove(this.handleRemove);
 		this.view.bindCategoryFocus(this.handleCategoryFocus);
 
-		this.render();
+		if (this.urlName.includes('index.html')) this.render();
+		if (this.urlName.includes('allTasks.html')) this.renderAllTasks();
+
 		this.hideSuggestionsController();
 		this.setupSidebarEvents();
 	}
+
 	render = () => {
-		const tasks = this.model.loadTasks();
+		const tasks = this.model.loadTasks(this.dateFormat());
 		this.view.renderTasks(tasks);
 	};
+
+	renderAllTasks = () => {
+		const tasks = this.model.loadAllTasks();
+		Object.entries(tasks).forEach(([dateKey, tasks]) => {
+			this.view.renderAllTasks(tasks);
+		});
+	};
+
+	dateFormat() {
+		const date = new Date();
+		const year = date.getFullYear();
+		const month = date.getMonth();
+		const day = date.getDate();
+		return `${year}-${String(month + 1).padStart(2, '0')}-${String(
+			day
+		).padStart(2, '0')}`;
+	}
 
 	handleAdd = (text, category) => {
 		const newTask = {
 			id: Date.now().toString(),
 			text,
 			completed: false,
-			date: new Date().toISOString(),
 			category,
 		};
-		this.model.addTask(newTask);
+		this.model.addTask(this.dateFormat(), newTask);
 		this.render();
 	};
 
 	handleToggle = (id) => {
-		this.model.toggleTask(id);
+		this.model.toggleTask(this.dateFormat(), id);
 		this.render();
 	};
 
 	handleRemove = (id) => {
-		this.model.removeTask(id);
+		this.model.removeTask(this.dateFormat(), id);
 		this.render();
 	};
 	handleCategoryFocus = () => {

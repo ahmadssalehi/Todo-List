@@ -20,13 +20,20 @@ export class View {
 	}
 
 	renderTasks(tasks) {
-		this.taskList.innerHTML = '';
-		tasks.forEach((task) => this.addTaskToDOM(task));
+		this.taskList && (this.taskList.innerHTML = '');
+		tasks.forEach((task) => {
+			this.addTaskToDOM(task)});
+	}
+
+	renderAllTasks(tasks) {
+		tasks.forEach((task) => {
+			this.addTaskToDOM(task)});
 	}
 
 	addTaskToDOM({ id, text, category, completed }) {
 		const item = document.createElement('div');
-		item.className = 'flex items-center justify-between p-2 border-b gap-2';
+		item.className =
+			'flex items-center justify-between p-2 border-b border-gray-300 gap-2';
 		item.dataset.id = id;
 		item.innerHTML = `
                 <input type="checkbox" class="check" ${
@@ -41,12 +48,12 @@ export class View {
 				</div>
                 <button class="remove text-red-500">&times;</button>
     `;
-		this.taskList.appendChild(item);
+		this.taskList?.appendChild(item);
 	}
 
 	bindCategoryFocus(handler) {
-		this.taskCategory.addEventListener('focus', handler);
-		this.taskCategory.addEventListener('input', handler);
+		this.taskCategory?.addEventListener('focus', handler);
+		this.taskCategory?.addEventListener('input', handler);
 	}
 
 	renderCategorySuggestions(categories) {
@@ -72,12 +79,12 @@ export class View {
 	}
 
 	hideSuggestions() {
-		this.suggestionsBox.classList.remove('opacity-100', 'visible');
-		this.suggestionsBox.classList.add('opacity-0', 'invisible');
+		this.suggestionsBox?.classList.remove('opacity-100', 'visible');
+		this.suggestionsBox?.classList.add('opacity-0', 'invisible');
 	}
 
 	bindAdd(handler) {
-		this.addBtn.addEventListener('click', () => {
+		this.addBtn?.addEventListener('click', () => {
 			const [text, category] = this.getTask();
 			if (!text || !category) return;
 			handler(text, category);
@@ -86,7 +93,7 @@ export class View {
 	}
 
 	bindToggle(handler) {
-		this.taskList.addEventListener('change', (e) => {
+		this.taskList?.addEventListener('change', (e) => {
 			if (e.target.classList.contains('check')) {
 				const id = e.target.closest('[data-id]').dataset.id;
 				handler(id);
@@ -95,7 +102,7 @@ export class View {
 	}
 
 	bindRemove(handler) {
-		this.taskList.addEventListener('click', (e) => {
+		this.taskList?.addEventListener('click', (e) => {
 			if (e.target.classList.contains('remove')) {
 				const id = e.target.closest('[data-id]').dataset.id;
 				handler(id);

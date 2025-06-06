@@ -4,26 +4,34 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>TodoListApp</title>
-		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.cdnfonts.com/css/proxima-nova-2"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="/src/output.css" />
 		<script type="module" src="/src/Controller.js" defer></script>
 	</head>
-	<body class="bg-gray-100 font-mono">
+	<body class="font-Reg bg-gray-100">
 		<header>
 			<h1
-				class="text-gray-800 text-3xl sm:text-4xl md:text-5xl font-bold text-center mx-4 mt-24 mb-4"
+				class="text-gray-800 text-3xl sm:text-4xl md:text-5xl text-center mx-4 mt-24 mb-4"
 			>
-				"Simple To-do List for complicated life."
+				To-do List
 			</h1>
 		</header>
 
 		<main>
 			<button
 				type="button"
-				title="nav-btn"
-				class="nav-btn m-4 px-4 py-2 z-50 fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg"
+				class="nav-btn m-4 px-2 py-2 z-50 fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer transition duration-300"
 			>
 				<svg
-					class="w-6 h-6"
+					fill="currentColor"
+					class="w-6"
 					clip-rule="evenodd"
 					fill-rule="evenodd"
 					stroke-linejoin="round"
@@ -43,35 +51,43 @@
 			<div
 				class="sidebar fixed top-0 left-0 h-full w-32 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-40"
 			>
-				<ul class="flex flex-col justify-center gap-2 mt-24 ml-8">
-					<li class="text-gray-700"><a href="#">All Tasks</a></li>
-					<li class="text-gray-700"><a href="#">Calender</a></li>
-					<li class="login-btn text-gray-700"><a href="#">Login</a></li>
+				<ul class="flex flex-col ml-6 gap-2 mt-24">
+					<li class="text-gray-400 hover:text-gray-900 transition duration-300">
+						<a href="/allTasks.html">All Tasks</a>
+					</li>
+					<li class="text-gray-400 hover:text-gray-900 transition duration-300">
+						<a href="/calendar.html">Calender</a>
+					</li>
+					<li
+						class="login-btn text-gray-400 hover:text-gray-900 transition duration-300"
+					>
+						<a href="#">Login</a>
+					</li>
 				</ul>
 			</div>
-			<div class="max-w-4xl mx-auto p-4">
-				<h2 class="text-xl font-bold mb-10 text-center sm:text-left">
+			<div class="max-w-4xl mx-12 mt-20 p-4">
+				<!-- <h2 class="text-xl font-nimbusBold font-bold mb-10 text-center sm:text-left">
 					ToDo List
-				</h2>
+				</h2> -->
 
 				<div class="flex flex-col sm:flex-row sm:items-center mb-8 gap-2">
 					<input
 						type="text"
 						placeholder="Write a new task"
-						class="task-input bg-gray-100 flex-1 border rounded px-3 py-2 text-gray-900"
+						class="task-input font-Mono bg-gray-100 flex-1 border-1 border-gray-300 rounded px-3 py-2 text-gray-900"
 					/>
 					<div class="relative w-full sm:w-36">
 						<input
 							type="text"
 							placeholder="Category"
-							class="task-category bg-gray-100 w-full border rounded px-3 py-2 text-gray-900"
+							class="task-category font-Mono bg-gray-100 w-full border-1 border-gray-300 rounded px-3 py-2 text-gray-900"
 						/>
 						<div
 							class="category-suggestions absolute mt-2 top-full left-0 right-0 bg-white shadow p-2 rounded transition-all duration-300 ease-in-out max-h-20 overflow-y-auto z-50 opacity-0 invisible"
 						></div>
 					</div>
 					<button
-						class="add-btn bg-yellow-500 hover:bg-yellow-600 text-white rounded py-2 w-full sm:w-32"
+						class="add-btn bg-yellow-500 hover:bg-yellow-600 text-white rounded py-2 w-full sm:w-32 transition duration-300"
 					>
 						Add
 					</button>
@@ -96,20 +112,24 @@
 						Login to your account
 					</h2>
 
-					<form class="login-form space-y-4">
+					<form class="login-form font-Mono space-y-4">
 						<div>
-							<label class="block text-sm text-gray-700 mb-1">Email</label>
+							<label class="block text-sm font-Reg text-gray-700 mb-1"
+								>Email</label
+							>
 							<input
 								type="email"
-								class="email-input w-full px-3 py-2 border rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+								class="email-input w-full px-3 py-2 border border-gray-300 rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
 								placeholder="you@example.com"
 							/>
 						</div>
 						<div>
-							<label class="block text-sm text-gray-700 mb-1">Password</label>
+							<label class="font-Reg block text-sm text-gray-700 mb-1"
+								>Password</label
+							>
 							<input
 								type="password"
-								class="password-input w-full px-3 py-2 border rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+								class="password-input w-full px-3 py-2 border border-gray-300 rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
 								placeholder="••••••••"
 							/>
 						</div>

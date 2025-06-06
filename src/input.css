@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@tailwind utilities;
+
+@font-face {
+	font-family: 'Mono';
+	src: url('/fonts/GT-America-Mono-Thin-Trial.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Reg';
+	src: url('/fonts/VarelaRound-Regular.ttf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+}
+.font-Mono {
+	font-family: 'Mono';
+}
+.font-Reg {
+	font-family: 'Reg';
+}
