@@ -9,6 +9,15 @@ export class View {
 		this.sidebar = document.querySelector('.sidebar');
 		this.backdrop = document.querySelector('.backdrop');
 	}
+	dateFormat() {
+		const date = new Date();
+		const year = date.getFullYear();
+		const month = date.getMonth();
+		const day = date.getDate();
+		return `${year}-${String(month + 1).padStart(2, '0')}-${String(
+			day
+		).padStart(2, '0')}`;
+	}
 
 	getTask() {
 		return [this.taskInput.value.trim(), this.taskCategory.value.trim()];
@@ -19,30 +28,37 @@ export class View {
 		this.taskCategory.value = '';
 	}
 
-	renderTasks(tasks) {
+	renderTasks(tasks, dateKey) {
 		this.taskList && (this.taskList.innerHTML = '');
 		tasks.forEach((task) => {
-			this.addTaskToDOM(task)});
+			this.addTaskToDOM(task, dateKey);
+		});
 	}
 
 	renderAllTasks(tasks) {
-		tasks.forEach((task) => {
-			this.addTaskToDOM(task)});
+		this.taskList && (this.taskList.innerHTML = '');
+		Object.entries(tasks).forEach(([dateKey, tasks]) => {
+			tasks.forEach((task) => {
+				this.addTaskToDOM(task, dateKey);
+			});
+		});
 	}
 
-	addTaskToDOM({ id, text, category, completed }) {
+	addTaskToDOM({ id, text, category, completed }, dateKey) {
 		const item = document.createElement('div');
 		item.className =
 			'flex items-center justify-between p-2 border-b border-gray-300 gap-2';
 		item.dataset.id = id;
+		item.dataset.date = dateKey;
 		item.innerHTML = `
                 <input type="checkbox" class="check" ${
 									completed ? 'checked' : ''
 								}>
-				<div class="flex justify-between w-full">
+				<div class="flex justify-between items-center w-full gap-2">
 					<span class="flex-1 ${
 						completed ? 'line-through text-gray-400' : ''
 					}">${text}</span>
+					<span class="text-gray-400 text-sm">${dateKey === this.dateFormat() ? 'Today': dateKey}</span>
 					<span class="text-gray-400">${category}
 					</span>
 				</div>
@@ -96,7 +112,8 @@ export class View {
 		this.taskList?.addEventListener('change', (e) => {
 			if (e.target.classList.contains('check')) {
 				const id = e.target.closest('[data-id]').dataset.id;
-				handler(id);
+				const dateKey = e.target.closest('[data-date]').dataset.date;
+				handler(dateKey, id);
 			}
 		});
 	}
@@ -105,7 +122,8 @@ export class View {
 		this.taskList?.addEventListener('click', (e) => {
 			if (e.target.classList.contains('remove')) {
 				const id = e.target.closest('[data-id]').dataset.id;
-				handler(id);
+				const dateKey = e.target.closest('[data-date]').dataset.date;
+				handler(dateKey, id);
 			}
 		});
 	}

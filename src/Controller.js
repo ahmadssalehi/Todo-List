@@ -9,30 +9,35 @@ export class Controller {
 	constructor() {
 		this.model = new Model();
 		this.view = new View();
-		this.urlName = window.location.pathname;
+		this.dateKey;
 
 		this.view.bindAdd(this.handleAdd);
 		this.view.bindToggle(this.handleToggle);
 		this.view.bindRemove(this.handleRemove);
 		this.view.bindCategoryFocus(this.handleCategoryFocus);
 
-		if (this.urlName.includes('index.html')) this.render();
-		if (this.urlName.includes('allTasks.html')) this.renderAllTasks();
-
 		this.hideSuggestionsController();
 		this.setupSidebarEvents();
+		this.checkPageAndRender();
+	}
+
+	checkPageAndRender() {
+		if (document.title === 'TodoListApp') {
+			this.dateKey = this.dateFormat();
+			this.render();
+		} else {
+			this.renderAllTasks();
+		}
 	}
 
 	render = () => {
-		const tasks = this.model.loadTasks(this.dateFormat());
-		this.view.renderTasks(tasks);
+		const tasks = this.model.loadTasks(this.dateKey);
+		this.view.renderTasks(tasks, this.dateKey);
 	};
 
 	renderAllTasks = () => {
 		const tasks = this.model.loadAllTasks();
-		Object.entries(tasks).forEach(([dateKey, tasks]) => {
-			this.view.renderAllTasks(tasks);
-		});
+		this.view.renderAllTasks(tasks);
 	};
 
 	dateFormat() {
@@ -52,18 +57,18 @@ export class Controller {
 			completed: false,
 			category,
 		};
-		this.model.addTask(this.dateFormat(), newTask);
-		this.render();
+		this.model.addTask(this.dateKey, newTask);
+		this.checkPageAndRender();
 	};
 
-	handleToggle = (id) => {
-		this.model.toggleTask(this.dateFormat(), id);
-		this.render();
+	handleToggle = (dateKey, id) => {
+		this.model.toggleTask(dateKey, id);
+		this.checkPageAndRender();
 	};
 
-	handleRemove = (id) => {
-		this.model.removeTask(this.dateFormat(), id);
-		this.render();
+	handleRemove = (dateKey, id) => {
+		this.model.removeTask(dateKey, id);
+		this.checkPageAndRender();
 	};
 	handleCategoryFocus = () => {
 		const tasks = this.model.loadTasks();

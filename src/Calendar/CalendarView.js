@@ -26,11 +26,15 @@ export class calendarView {
 		this.taskCategory = document.querySelector('.modal-task-category');
 		this.addTaskBtn = document.querySelector('.add-task-btn');
 		this.closeModalBtn = document.querySelector('.close-modal');
+		this.prevMonth = document.querySelector('.prev-month');
+		this.nextMonth = document.querySelector('.next-month');
 	}
+
 	clearInput() {
 		this.taskInput.value = '';
 		this.taskCategory.value = '';
 	}
+
 	setGetMonth(callback) {
 		this.getMonth = callback;
 	}
@@ -38,6 +42,7 @@ export class calendarView {
 	daysInMonth(month) {
 		return new Date(this.year, month + 1, 0).getDate();
 	}
+
 	dateFormat(year, month, day) {
 		return `${year}-${String(month + 1).padStart(2, '0')}-${String(
 			day
@@ -55,22 +60,15 @@ export class calendarView {
 			Array(startDay).fill(emptyCell).join('')
 		);
 	}
+
 	renderDayBoxes(container, daysInMonth, year, month, tasks) {
 		const dayBoxes = Array.from({ length: daysInMonth }, (_, i) => {
 			const day = i + 1;
 			const dateKey = this.dateFormat(year, month, day);
 			const dayTasks = tasks[dateKey] || [];
-			const taskCount = dayTasks.length ?`<span class="bg-gray-400 text-gray-100 text-xs px-1  rounded max-w-full">${dayTasks.length}</span>` : '';
-			// 	const taskCount = dayTasks.length
-			// 		? `<div class="flex flex-wrap gap-1 mb-1 overflow-hidden">
-			// ${dayTasks
-			// 			.map(
-			// 				(task, i) =>
-			// 					`<span class="bg-yellow-300 text-yellow-900 text-xs px-1 rounded truncate max-w-full">${taskCount}</span>`
-			// 			)
-			// 			.join('')}
-			// </div>`
-			// 		: '';
+			const taskCount = dayTasks.length
+				? `<span class="bg-gray-400 text-gray-100 text-xs px-1  rounded max-w-full">${dayTasks.length}</span>`
+				: '';
 
 			return `<div data-date="${dateKey}" class="h-9 w-9 border border-gray-300 rounded bg-white hover:bg-yellow-100 cursor-pointer items-center justify-center flex flex-col">
         	<div class="text-xs text-gray-400">${day}</div>
@@ -111,22 +109,66 @@ export class calendarView {
 
 	hideBtns(btn) {
 		if (btn === 'prev-month') {
-			document.querySelector('.prev-month').classList.add('invisible');
+			this.prevMonth.classList.add('invisible');
 		} else {
-			document.querySelector('.next-month').classList.add('invisible');
+			this.nextMonth.classList.add('invisible');
 		}
 	}
+
 	showBtns(btn) {
 		if (btn === 'prev-month') {
-			document.querySelector('.prev-month').classList.remove('invisible');
+			this.prevMonth.classList.remove('invisible');
 		} else {
-			document.querySelector('.next-month').classList.remove('invisible');
+			this.nextMonth.classList.remove('invisible');
 		}
 	}
+
 	openModal() {
 		this.calendarModal.classList.remove('hidden');
 	}
+
 	closeModal() {
 		this.calendarModal.classList.add('hidden');
+	}
+
+	bindHandleCalendarModal() {
+		this.closeModalBtn?.addEventListener('click', () => this.closeModal());
+		this.calendarModal.addEventListener('click', (e) => {
+			if (e.target === this.calendarModal) this.closeModal();
+		});
+	}
+
+	bindMonthChangeBtn(handler) {
+		this.prevMonth.addEventListener('click', () => handler(-1));
+		this.nextMonth.addEventListener('click', () => handler(1));
+	}
+
+	bindDayClick(handler) {
+		this.calendarDays.addEventListener('click', (e) => {
+			handler(e);
+		});
+	}
+
+	bindAddTask(handler) {
+		this.addTaskBtn?.addEventListener('click', () => {
+			handler();
+			this.clearInput();
+		});
+	}
+
+	bindToggleTask(handler) {
+		this.taskList?.addEventListener('change', (e) => {
+			if (e.target.classList.contains('check')) {
+				handler(e);
+			}
+		});
+	}
+
+	bindRemoveTask(handler) {
+		this.taskList?.addEventListener('click', (e) => {
+			if (e.target.classList.contains('remove')) {
+				handler(e);
+			}
+		});
 	}
 }
