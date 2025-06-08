@@ -5,6 +5,7 @@ import { LoginController } from '/src/Login/LoginController.js';
 
 const loginView = new LoginView();
 const loginController = new LoginController(loginView);
+
 export class Controller {
 	constructor() {
 		this.model = new Model();
@@ -70,6 +71,7 @@ export class Controller {
 		this.model.removeTask(dateKey, id);
 		this.checkPageAndRender();
 	};
+
 	handleCategoryFocus = () => {
 		const tasks = this.model.loadTasks();
 		const categories = [
@@ -77,6 +79,7 @@ export class Controller {
 		];
 		this.view.renderCategorySuggestions(categories);
 	};
+
 	setupSidebarEvents = () => {
 		this.view.bindToggleSidebar(this.handleOutsideSidebarClick);
 	};
@@ -88,6 +91,7 @@ export class Controller {
 			this.view.closeSidebar();
 		}
 	};
+
 	hideSuggestionsController = () => {
 		document.addEventListener('click', (e) => {
 			const clickedInsideInput = e.target.closest('.task-category');
@@ -103,31 +107,3 @@ export class Controller {
 }
 
 new Controller();
-//
-// const input = document.querySelector('.task-input');
-// const addBtn = document.querySelector('.add-task-btn');
-// const list = document.querySelector('.task-list');
-
-// addBtn.onclick = () => {
-// 	const val = input.value.trim();
-// 	if (!val) return;
-
-// 	const li = document.createElement('li');
-// 	li.className = 'flex justify-between items-center bg-gray-100 p-2 rounded';
-// 	li.innerHTML = `
-//         <label class="flex items-center space-x-3">
-//             <input type="checkbox" class="form-checkbox w-6 h-6 text-blue-600" />
-//             <span class="text-lg">${val}</span>
-//             </label>
-//         <button class="remove-btn text-red-500 hover:text-red-700 ml-4 text-xl">❌</button>
-//         `;
-
-// 	list.appendChild(li);
-// 	input.value = '';
-// 	input.focus();
-// };
-
-// list.onclick = (e) => {
-// 	if (e.target.classList.contains('remove-btn'))
-// 		e.target.parentElement.remove();
-// };

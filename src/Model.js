@@ -38,7 +38,6 @@ export class Model {
 	}
 
 	updateTask(dateKey, id, updates) {
-		// updates: { text?: string, category?: string, completed?: boolean }
 		if (!this.tasks[dateKey]) return;
 		this.tasks[dateKey] = this.tasks[dateKey].map((task) =>
 			task.id === id ? { ...task, ...updates } : task
