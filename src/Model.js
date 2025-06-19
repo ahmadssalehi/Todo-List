@@ -9,7 +9,7 @@ export class Model {
 	}
 
 	loadTasks(dateKey) {
-		return this.tasks[dateKey] || [];
+		return [...(this.tasks[dateKey] || [])];
 	}
 
 	loadAllTasks() {
@@ -34,6 +34,7 @@ export class Model {
 		this.tasks[dateKey] = this.tasks[dateKey].map((task) =>
 			task.id === id ? { ...task, completed: !task.completed } : task
 		);
+		if (this.tasks[dateKey].length === 0) delete this.tasks[dateKey];
 		this.saveTask();
 	}
 
@@ -42,6 +43,17 @@ export class Model {
 		this.tasks[dateKey] = this.tasks[dateKey].map((task) =>
 			task.id === id ? { ...task, ...updates } : task
 		);
+		if (this.tasks[dateKey].length === 0) delete this.tasks[dateKey];
 		this.saveTask();
+	}
+
+	clearTasks() {
+		this.tasks = {};
+		localStorage.removeItem(this.storageKey);
+	}
+
+	getAllCategories() {
+		const allTasks = Object.values(this.tasks).flat();
+		return [...new Set(allTasks.map((task) => task.category).filter(Boolean))];
 	}
 }

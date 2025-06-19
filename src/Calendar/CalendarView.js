@@ -61,50 +61,67 @@ export class calendarView {
 		);
 	}
 
-	renderDayBoxes(container, daysInMonth, year, month, tasks) {
+	renderDayBoxes(container, daysInMonth, year, month) {
 		const dayBoxes = Array.from({ length: daysInMonth }, (_, i) => {
 			const day = i + 1;
 			const dateKey = this.dateFormat(year, month, day);
-			const dayTasks = tasks[dateKey] || [];
-			const taskCount = dayTasks.length
-				? `<span class="bg-gray-400 text-gray-100 text-xs px-1  rounded max-w-full">${dayTasks.length}</span>`
-				: '';
-
-			return `<div data-date="${dateKey}" class="h-9 w-9 border border-gray-300 rounded bg-white hover:bg-yellow-100 cursor-pointer items-center justify-center flex flex-col">
-        	<div class="text-xs text-gray-400">${day}</div>
-			${taskCount}
+			
+			return `<div data-date="${dateKey}" class="h-9 border border-gray-300 rounded bg-white hover:bg-yellow-100 cursor-pointer items-center justify-center flex flex-col">
+			<div class="p-2 text-center rounded-lg  cursor-pointer">${day}</div>
 			</div>
-    `;
+    `; 
 		}).join('');
 
 		container.insertAdjacentHTML('beforeend', dayBoxes);
 	}
 
 	renderCalendarTasks(dateKey, tasks) {
-		this.modalDate.textContent = dateKey;
+		this.modalDate.textContent = dateKey.replaceAll('-', '/');
 		if (!tasks.length) {
 			this.taskList.innerHTML = `<li class="text-gray-500">No tasks</li>`;
 		} else {
 			this.taskList.innerHTML = tasks
-				.map(
-					(task) => `
+				.map(function (task) {
+					const completedCheck = `${
+						task.completed ? 'line-through text-gray-400' : ''
+					}`;
+					return `
 	      <li data-id= '${
 					task.id
 				}' class="flex items-center justify-between p-2 border-b border-gray-300 gap-2 py-1">
-		  	<input type="checkbox" class="check" ${task.completed ? 'checked' : ''}>
-				<div class="flex justify-between w-full">
-					<span class="flex-1 ${task.completed ? 'line-through text-gray-400' : ''}">${
-						task.text
-					}</span>
-					<span class="text-gray-400">${task.category}
+				<label class="relative inline-flex items-center cursor-pointer">
+  <input
+    type="checkbox"
+    class="peer check appearance-none h-5 w-5 border-2 border-yellow-400 rounded checked:bg-yellow-500 checked:border-yellow-500 cursor-pointer" ${
+			task.completed ? 'checked' : ''
+		}
+  />
+  <svg
+    class="absolute left-0 top-0 h-6 w-6 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+</label>
+<div class="flex justify-between items-center w-full gap-2">
+					<span class="flex-1 
+					${completedCheck}">${task.text}</span>
+					<span class="text-gray-400 ${completedCheck}">${task.category}
 					</span>
 				</div>
-	        <button class="remove text-red-500 hover:text-red-700">&times;</button>
-	      </li>`
-				)
+	       <button class="text-red-500 hover:text-red-700 cursor-pointer" aria-label="Remove task">
+							<i class="remove fas fa-trash"></i>
+						</button>
+	      </li>`;
+				})
 				.join('');
 		}
-		this.taskInput.value = '';
+		this.clearInput()
 	}
 
 	hideBtns(btn) {

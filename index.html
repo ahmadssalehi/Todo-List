@@ -5,140 +5,154 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>TodoListApp</title>
 		<link
-			href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
 			rel="stylesheet"
 		/>
 		<link
-			href="https://fonts.cdnfonts.com/css/proxima-nova-2"
 			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 		/>
 		<link rel="stylesheet" href="/src/output.css" />
 		<script type="module" src="/src/Controller.js" defer></script>
 	</head>
-	<body class="font-Reg bg-gray-100">
-		<header>
-			<h1
-				class="text-gray-800 text-3xl sm:text-4xl md:text-5xl text-center mx-4 mt-24 mb-4"
-			>
-				To-do List
-			</h1>
-		</header>
-
-		<main>
+	<body class="h-screen bg-yellow-50 text-stone-800">
+		<div class="flex h-screen overflow-hidden">
+			<!-- Sidebar -->
+			<!-- Navigation Button -->
 			<button
 				type="button"
-				class="nav-btn m-4 px-2 py-2 z-50 fixed top-4 left-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer transition duration-300"
+				class="nav-btn fixed p-4 pl-6 pt-6 rounded-full transition-colors cursor-pointer z-50 lg:hidden"
 			>
-				<svg
-					fill="currentColor"
-					class="w-6"
-					clip-rule="evenodd"
-					fill-rule="evenodd"
-					stroke-linejoin="round"
-					stroke-miterlimit="2"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
-						fill-rule="nonzero"
-					/>
-				</svg>
+				<i class="fas fa-bars text-xl text-stone-600"></i>
 			</button>
-
-			<div class="backdrop hidden fixed inset-0 bg-black/50 z-30"></div>
-
+			<!-- Sidebar Menu (visible on larger screens) -->
 			<div
-				class="sidebar fixed top-0 left-0 h-full w-32 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-40"
+				class="sidebar bg-yellow-100 rounded-r-lg fixed top-0 left-0 h-full shadow-lg transform transition-transform duration-300 ease-in-out -translate-x-full lg:-translate-x-0 z-40 lg:z-0 lg:static w-fit p-4"
 			>
-				<ul class="flex flex-col ml-6 gap-2 mt-24">
-					<li class="text-gray-400 hover:text-gray-900 transition duration-300">
-						<a href="/allTasks.html">All Tasks</a>
-					</li>
-					<li class="text-gray-400 hover:text-gray-900 transition duration-300">
-						<a href="/calendar.html">Calender</a>
-					</li>
-					<li
-						class="login-btn text-gray-400 hover:text-gray-900 transition duration-300"
+				<h2 class="text-s font-bold text-stone-500 uppercase px-4 py-4">
+					Menu
+				</h2>
+				<div class="mt-2 space-y-1">
+					<a
+						href="#"
+						class="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-stone-600 hover:bg-yellow-200 bg-yellow-300"
+						><i class="fas fa-home w-5 text-center"></i>Home</a
 					>
-						<a href="#">Login</a>
+					<a
+						href="/allTasks.html"
+						class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-200"
+						><i class="fas fa-tasks w-5 text-center"></i>All Tasks</a
+					>
+					<a
+						href="/calendar.html"
+						class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-200"
+						><i class="fas fa-calendar-alt w-5 text-center"></i>Calendar</a
+					>
+					<li class="login-btn list-none">
+						<a
+							href="#"
+							class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-200"
+							><i class="fas fa-sign-in-alt w-5 text-center"></i>Login</a
+						>
 					</li>
-				</ul>
+				</div>
 			</div>
-			<div class="max-w-4xl mx-auto mt-20 p-4">
-				<div class="flex flex-col sm:flex-row sm:items-center mb-8 gap-2">
-					<input
-						type="text"
-						placeholder="Write a new task"
-						class="task-input font-Mono bg-gray-100 flex-1 border-1 border-gray-300 rounded px-3 py-2 text-gray-900"
-					/>
-					<div class="relative w-full sm:w-36">
+			<!-- Main Content -->
+			<main class="flex flex-col flex-1">
+				<!-- Header -->
+				<header class="flex-shrink-0 flex items-center justify-center p-4">
+					<div class="title text-2xl font-bold text-stone-800">
+						<h1 class="text-3xl font-bold text-gray-800">My To-Do List</h1>
+					</div>
+				</header>
+				<!-- Task Container -->
+				<div
+					class="flex flex-col flex-1 items-center p-8 bg-yellow-50 rounded-lg h-full w-full max-w-full relative"
+				>
+					<div class="w-full md:w-full space-y-3">
+						<div class="p-6 rounded-lg shadow-md">
+							<div
+								class="relative flex flex-col md:flex-row items-center gap-4"
+							>
+								<input
+									type="text"
+									placeholder="Write a new task..."
+									class="task-input w-full bg-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 p-4 border border-yellow-300 focus:border-yellow-500 py-2 text-stone-700 placeholder:text-stone-400"
+								/>
+								<div class="category-container relative w-full">
+									<input
+										type="text"
+										placeholder="Category"
+										class="task-category w-full bg-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 p-4 border border-yellow-300 focus:border-yellow-500 py-2 text-stone-700 placeholder:text-stone-400"
+									/>
+									<div
+										class="category-suggestions absolute mt-2 top-full left-0 right-0 bg-yellow-50 shadow-lg p-2 rounded-lg max-h-40 overflow-y-auto z-50 opacity-0 invisible"
+									></div>
+								</div>
+							</div>
+							<button
+								class="add-btn modal-addTask-btn w-full bg-yellow-400 hover:bg-yellow-500 text-stone-800 font-bold py-2 rounded-lg transition duration-300 mt-4 cursor-pointer"
+							>
+								<i class="fas fa-plus mr-2"></i>Add Task
+							</button>
+						</div>
+					</div>
+					<div
+						class="bg-yellow-50 p-6 rounded-lg shadow-md mt-4 w-full md:w-full space-y-3"
+					>
+						<h2 class="text-2xl font-bold mb-4">Your Tasks</h2>
+						<ul class="task-list"></ul>
+					</div>
+				</div>
+				<footer class="w-full text-center text-gray-500 py-6 mt-8">
+					<p>&copy; 2025 ToDoListApp. All rights reserved.</p>
+				</footer>
+			</main>
+		</div>
+		<!-- Backdrop for modals -->
+		<div class="backdrop fixed hidden inset-0 bg-black/30 z-30"></div>
+				<!-- Login modal -->
+		<div
+			class="login-modal fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+		>
+			<div
+				class="bg-yellow-50 m-8 p-8 rounded-2xl shadow-2xl w-full max-w-md relative"
+			>
+			<i class="close-login-btn absolute top-8 right-8 text-gray-500 hover:text-stone-800 fa fa-xmark cursor-pointer"></i>
+				<h2 class="text-3xl font-bold mb-6 text-center text-stone-800">
+					Welcome Back!
+				</h2>
+				<form class="login-form space-y-3">
+					<div>
+						<label class="block text-sm font-medium text-stone-700 mb-1"
+							>Email Address</label
+						>
 						<input
-							type="text"
-							placeholder="Category"
-							class="task-category font-Mono bg-gray-100 w-full border-1 border-gray-300 rounded px-3 py-2 text-gray-900"
+							type="email"
+							class="email-input w-full border border-gray-300 rounded-lg focus:outline-none bg-yellow-50 px-3 py-2 mb-2 focus:ring focus:ring-yellow-300"
+							placeholder="you@example.com"
+							required
 						/>
-						<div
-							class="category-suggestions absolute mt-2 top-full left-0 right-0 bg-white shadow p-2 rounded transition-all duration-300 ease-in-out max-h-20 overflow-y-auto z-50 opacity-0 invisible"
-						></div>
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-stone-700 mb-1"
+							>Password</label
+						>
+						<input
+							type="password"
+							class="password-input w-full border border-gray-300 rounded-lg focus:outline-none bg-yellow-50 px-3 py-2 mb-2 focus:ring focus:ring-yellow-300"
+							placeholder="••••••••"
+							required
+						/>
 					</div>
 					<button
-						class="add-btn bg-yellow-500 hover:bg-yellow-600 text-white rounded py-2 w-full sm:w-32 transition duration-300"
+						type="submit"
+						class="login-submit w-full bg-yellow-500 hover:bg-yellow-600 text-stone-800 font-bold py-3 rounded-lg transition duration-300 cursor-pointer"
 					>
-						Add
+						Login
 					</button>
-				</div>
-
-				<ul class="task-list list-disc pl-5 space-y-2"></ul>
+				</form>
 			</div>
-			<!-- Login Modal -->
-			<div
-				class="login-modal fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
-			>
-				<div
-					class="bg-white m-8 p-8 rounded-lg shadow-lg w-full max-w-sm relative"
-				>
-					<button
-						class="close-login-btn absolute top-2 right-2 text-gray-500 hover:text-red-500"
-					>
-						&times;
-					</button>
-
-					<h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">
-						Login to your account
-					</h2>
-
-					<form class="login-form font-Mono space-y-4">
-						<div>
-							<label class="block text-sm font-Reg text-gray-700 mb-1"
-								>Email</label
-							>
-							<input
-								type="email"
-								class="email-input w-full px-3 py-2 border border-gray-300 rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-								placeholder="you@example.com"
-							/>
-						</div>
-						<div>
-							<label class="font-Reg block text-sm text-gray-700 mb-1"
-								>Password</label
-							>
-							<input
-								type="password"
-								class="password-input w-full px-3 py-2 border border-gray-300 rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-								placeholder="••••••••"
-							/>
-						</div>
-						<button
-							type="submit"
-							class="login-submit w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 rounded transition duration-300"
-						>
-							Login
-						</button>
-					</form>
-				</div>
-			</div>
-		</main>
-		<footer></footer>
+		</div>
 	</body>
 </html>

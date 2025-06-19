@@ -5,12 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Calendar</title>
 		<link
-			href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
 			rel="stylesheet"
 		/>
 		<link
-			href="https://fonts.cdnfonts.com/css/proxima-nova-2"
 			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 		/>
 		<link rel="stylesheet" href="/src/output.css" />
 		<script
@@ -20,92 +20,80 @@
 		></script>
 		<script type="module" src="/src/Controller.js" defer></script>
 	</head>
-	<body class="font-Reg bg-gray-100">
-		<button
-			type="button"
-			title=""
-			class="nav-btn m-4 px-2 py-2 z-50 fixed top-0 left-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg cursor-pointer"
-		>
-			<svg
-				class="w-6"
-				fill="currentColor"
-				clip-rule="evenodd"
-				fill-rule="evenodd"
-				stroke-linejoin="round"
-				stroke-miterlimit="2"
-				viewBox="0 0 24 24"
-				xmlns="http://www.w3.org/2000/svg"
+	<body class="h-screen bg-yellow-50 text-stone-800">
+		<div class="flex h-screen overflow-hidden">
+			<!-- Sidebar -->
+			<button
+				type="button"
+				class="nav-btn fixed p-4 pl-6 pt-6 rounded-full transition-colors cursor-pointer z-50 md:hidden lg:hidden"
 			>
-				<path
-					d="m21 15.75c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-16.5c-.414 0-.75.336-.75.75s.336.75.75.75h16.5c.414 0 .75-.336.75-.75z"
-					fill-rule="nonzero"
-				/>
-			</svg>
-		</button>
-
-		<div class="backdrop hidden fixed inset-0 bg-black/50 z-30"></div>
-
-		<div
-			class="sidebar fixed top-0 left-0 h-full w-32 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-40"
-		>
-			<ul class="flex flex-col ml-6 gap-2 mt-24">
-				<li class="text-gray-400 hover:text-gray-900 transition duration-300">
-					<a href="index.html">Home</a>
-				</li>
-				<li class="text-gray-400 hover:text-gray-900 transition duration-300">
-					<a href="/allTasks.html">All Tasks</a>
-				</li>
-				<li
-					class="login-btn text-gray-400 hover:text-gray-900 transition duration-300"
-				>
-					<a href="#">Login</a>
-				</li>
-			</ul>
-		</div>
-
-		<div
-			class="calendar min-h-screen flex flex-col items-center justify-center"
-		>
-			<div class="calendar-head flex gap-2">
-				<img class="w-8" src="/pic/calendar_icon.png" alt="calendar" />
-				<h2 class="text-2xl font-Reg pt-1">Calender</h2>
-			</div>
+				<i class="fas fa-bars text-xl text-stone-600"></i>
+			</button>
+			<!-- Sidebar Menu (visible on larger screens) -->
 			<div
-				class="calendar-tab relative flex flex-col items-start w-full mt-2 mb-2"
+				class="sidebar bg-yellow-100 rounded-r-lg fixed top-0 left-0 h-full shadow-lg transform transition-transform duration-300 ease-in-out -translate-x-full md:-translate-x-0 md:static md:z-0 lg:-translate-x-0 z-40 lg:z-0 lg:static w-fit p-4"
 			>
-				<div
-					class="hidden sm:block absolute bottom-[0.5px] inset-x-12 h-[2px] bg-gray-300 rounded-full"
-				></div>
-				<div class="relative w-64 flex items-center justify-center ml-12">
-					<img
-						class="hidden sm:block w-8 h-8 mr-1 mb-4"
-						src="/pic/calendar_icon_svg.svg.png"
-						alt="calendar"
-					/>
-					<p class="hidden sm:block mb-4 pt-1">Calendar View</p>
-					<div
-						class="hidden sm:block absolute left-0 bottom-0 w-64 h-[3px] bg-gray-700 rounded-full"
-					></div>
+				<h2 class="text-s font-bold text-stone-500 uppercase px-4 py-4">
+					Menu
+				</h2>
+				<div class="mt-2 space-y-1">
+					<a
+						href="/index.html"
+						class="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-stone-600 hover:bg-yellow-200 "
+						><i class="fas fa-home w-5 text-center"></i>Home</a
+					>
+					<a
+						href="/allTasks.html"
+						class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-200"
+						><i class="fas fa-tasks w-5 text-center"></i>All Tasks</a
+					>
+					<a
+						href="#"
+						class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-200 bg-yellow-300"
+						><i class="fas fa-calendar-alt w-5 text-center"></i>Calendar</a
+					>
+					<li class="login-btn list-none">
+						<a
+							href="#"
+							class="flex items-center gap-3 px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-200"
+							><i class="fas fa-sign-in-alt w-5 text-center"></i>Login</a
+						>
+					</li>
 				</div>
 			</div>
-			<div
-				class="max-w-full mx-8 bg-white shadow-xl rounded-lg px-4 py-4 overflow-hidden"
-			>
+			<!-- Main Content -->
+			<main class="flex flex-col flex-1 justify-between">
+				<div>
+				<!-- Header -->
+				<header class="flex-shrink-0 flex items-center justify-center p-4">
+					<div class="title text-2xl font-bold text-stone-800">
+						<h1 class="text-3xl font-bold text-stone-800">Calendar</h1>
+					</div>
+				</header>
+				<!-- Backdrop for modals -->
+				<div class="backdrop fixed hidden inset-0 bg-black/30 z-30"></div>
+				<!-- Calendar -->
+				<div
+					class="calendar flex flex-col"
+				>
+					<div
+						class="max-w-full mx-8 bg-yellow-50 shadow-xl rounded-lg px-4 py-4 overflow-hidden"
+					>
 				<div class="flex justify-between items-center pb-4">
 					<button
-						class="prev-month text-sm px-3 py-1 bg-yellow-500 rounded text-white hover:bg-yellow-600 cursor-pointer"
+						class="prev-month md:w-auto bg-yellow-500 hover:bg-yellow-600 text-stone-800 font-semibold px-2 py-2 rounded-lg transition duration-100 flex items-center justify-center cursor-pointer"
 					>
-						Previous
+						<i class="fas fa-arrow-left"></i>
 					</button>
-					<div class="calendar-title text-md md:text-3xl"></div>
+					<div class="calendar-title text-md md:text-xl"></div>
 					<button
-						class="next-month text-sm px-3 py-1 bg-yellow-500 rounded text-white hover:bg-yellow-600 cursor-pointer"
+						class="next-month md:w-auto bg-yellow-500 hover:bg-yellow-600 text-stone-800 font-semibold px-2 py-2 rounded-lg transition duration-100 flex items-center justify-center cursor-pointer"
 					>
-						Next
+						<i class="fas fa-arrow-right"></i>
 					</button>
 				</div>
 				<div
-					class="text-sm grid grid-cols-7 text-center font-semibold text-gray-700 mb-2 mx-auto"
+					class="text-sm grid grid-cols-7 text-center font-semibold text-stone-700 mb-2 mx-auto"
 				>
 					<div>Sun</div>
 					<div>Mon</div>
@@ -118,17 +106,20 @@
 				<div
 					class="calendar-days grid grid-cols-7 gap-1 text-center text-sm"
 				></div>
-			</div>
-		</div>
+				</div>
+				</div>
+				</div>
+				<footer class="w-full text-center text-gray-500 py-6 mt-8">
+					<p>&copy; 2025 ToDoListApp. All rights reserved.</p>
+				</footer>
+			</main>
+		<!-- Calendar modal -->
 		<div
 			class="calendar-modal fixed inset-0 px-8 shadow-xl bg-black/50 flex items-center justify-center hidden"
 		>
-			<div class="bg-white rounded-lg shadow-lg w-96 p-4 relative">
-				<button
-					class="close-modal absolute top-2 right-2 text-gray-500 hover:text-gray-900"
-				>
-					&times;
-				</button>
+			<div class="bg-yellow-50 rounded-lg shadow-lg w-96 p-4 relative">
+				<i class="close-modal absolute top-4 right-4 text-gray-500 hover:text-stone-800 fa fa-xmark cursor-pointer"></i>
+				
 				<h3 class="modal-date text-lg font-semibold mb-3"></h3>
 				<ul
 					class="modal-task-list mb-4 max-h-48 overflow-y-auto text-left"
@@ -136,60 +127,57 @@
 				<input
 					type="text"
 					placeholder="Add a new task..."
-					class="modal-task-input w-full border border-gray-300 rounded bg-gray-100 px-3 py-2 mb-2 focus:outline-none focus:ring focus:ring-yellow-300"
+					class="modal-task-input w-full border border-gray-300 rounded-lg bg-yellow-50 px-3 py-2 mb-2 focus:outline-none focus:ring focus:ring-yellow-300"
 				/>
 				<input
 					type="text"
 					placeholder="Category"
-					class="modal-task-category w-full border border-gray-300 rounded bg-gray-100 px-3 py-2 mb-2 focus:outline-none focus:ring focus:ring-yellow-300"
+					class="modal-task-category w-full border border-gray-300 rounded-lg bg-yellow-50 px-3 py-2 mb-2 focus:outline-none focus:ring focus:ring-yellow-300"
 				/>
 				<button
-					class="add-task-btn modal-addTask-btn w-full bg-yellow-600 text-white py-2 rounded hover:bg-yellow-700"
+					class="add-task-btn modal-addTask-btn w-full bg-yellow-500 text-stone-800 py-2 rounded-lg font-bold hover:bg-yellow-600 cursor-pointer"
 				>
 					Add
 				</button>
 			</div>
 		</div>
+		<!-- Login modal -->
 		<div
 			class="login-modal fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
 		>
 			<div
-				class="bg-white m-8 p-8 rounded-lg shadow-lg w-full max-w-sm relative"
+				class="bg-yellow-50 m-8 p-8 rounded-2xl shadow-2xl w-full max-w-md relative"
 			>
-				<button
-					class="close-login-btn absolute top-2 right-2 text-gray-500 hover:text-red-500"
-				>
-					&times;
-				</button>
-
-				<h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">
-					Login to your account
+			<i class="close-login-btn absolute top-8 right-8 text-gray-500 hover:text-stone-800 fa fa-xmark cursor-pointer"></i>
+				<h2 class="text-3xl font-bold mb-6 text-center text-stone-800">
+					Welcome Back!
 				</h2>
-
-				<form class="login-form font-Mono space-y-4">
+				<form class="login-form space-y-3">
 					<div>
-						<label class="block text-sm font-Reg text-gray-700 mb-1"
-							>Email</label
+						<label class="block text-sm font-medium text-stone-700 mb-1"
+							>Email Address</label
 						>
 						<input
 							type="email"
-							class="email-input w-full px-3 py-2 border border-gray-300 rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+							class="email-input w-full border border-gray-300 rounded-lg focus:outline-none bg-yellow-50 px-3 py-2 mb-2 focus:ring focus:ring-yellow-300"
 							placeholder="you@example.com"
+							required
 						/>
 					</div>
 					<div>
-						<label class="font-Reg block text-sm text-gray-700 mb-1"
+						<label class="block text-sm font-medium text-stone-700 mb-1"
 							>Password</label
 						>
 						<input
 							type="password"
-							class="password-input w-full px-3 py-2 border border-gray-300 rounded bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+							class="password-input w-full border border-gray-300 rounded-lg focus:outline-none bg-yellow-50 px-3 py-2 mb-2 focus:ring focus:ring-yellow-300"
 							placeholder="••••••••"
+							required
 						/>
 					</div>
 					<button
 						type="submit"
-						class="login-submit w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 rounded transition duration-300"
+						class="login-submit w-full bg-yellow-500 hover:bg-yellow-600 text-stone-800 font-bold py-3 rounded-lg transition duration-300 cursor-pointer"
 					>
 						Login
 					</button>

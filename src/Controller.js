@@ -19,16 +19,21 @@ export class Controller {
 
 		this.hideSuggestionsController();
 		this.setupSidebarEvents();
-		this.checkPageAndRender();
+
+		this.renderCurrentView();
 	}
 
-	checkPageAndRender() {
-		if (document.title === 'TodoListApp') {
-			this.dateKey = this.dateFormat();
+	renderCurrentView() {
+		if (this.isHomePage()) {
+			this.dateKey = this.view.dateFormat();
 			this.render();
 		} else {
 			this.renderAllTasks();
 		}
+	}
+
+	isHomePage() {
+		return document.title === 'TodoListApp';
 	}
 
 	render = () => {
@@ -41,42 +46,29 @@ export class Controller {
 		this.view.renderAllTasks(tasks);
 	};
 
-	dateFormat() {
-		const date = new Date();
-		const year = date.getFullYear();
-		const month = date.getMonth();
-		const day = date.getDate();
-		return `${year}-${String(month + 1).padStart(2, '0')}-${String(
-			day
-		).padStart(2, '0')}`;
-	}
-
 	handleAdd = (text, category) => {
 		const newTask = {
-			id: Date.now().toString(),
+			id: crypto.randomUUID?.() || Date.now().toString(),
 			text,
 			completed: false,
 			category,
 		};
 		this.model.addTask(this.dateKey, newTask);
-		this.checkPageAndRender();
+		this.renderCurrentView();
 	};
 
 	handleToggle = (dateKey, id) => {
 		this.model.toggleTask(dateKey, id);
-		this.checkPageAndRender();
+		this.renderCurrentView();
 	};
 
 	handleRemove = (dateKey, id) => {
 		this.model.removeTask(dateKey, id);
-		this.checkPageAndRender();
+		this.renderCurrentView();
 	};
 
 	handleCategoryFocus = () => {
-		const tasks = this.model.loadTasks();
-		const categories = [
-			...new Set(tasks.map((task) => task.category).filter(Boolean)),
-		];
+		const categories = this.model.getAllCategories();
 		this.view.renderCategorySuggestions(categories);
 	};
 

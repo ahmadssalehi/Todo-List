@@ -9,14 +9,16 @@ export class View {
 		this.sidebar = document.querySelector('.sidebar');
 		this.backdrop = document.querySelector('.backdrop');
 	}
+	
 	dateFormat() {
 		const date = new Date();
 		const year = date.getFullYear();
-		const month = date.getMonth();
+		const month = date.getMonth() + 1;
 		const day = date.getDate();
-		return `${year}-${String(month + 1).padStart(2, '0')}-${String(
-			day
-		).padStart(2, '0')}`;
+		return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(
+			2,
+			'0'
+		)}`;
 	}
 
 	getTask() {
@@ -47,22 +49,44 @@ export class View {
 	addTaskToDOM({ id, text, category, completed }, dateKey) {
 		const item = document.createElement('div');
 		item.className =
-			'flex items-center justify-between p-2 border-b border-gray-300 gap-2';
+			'task flex p-2 border-b border-gray-300 gap-2 items-center';
 		item.dataset.id = id;
 		item.dataset.date = dateKey;
+		const completedCheck = `${completed ? 'line-through text-gray-400' : ''}`;
 		item.innerHTML = `
-                <input type="checkbox" class="check" ${
+						<label class="relative inline-flex items-center cursor-pointer">
+    						<input
+								type="checkbox"
+    							class="peer check appearance-none h-5 w-5 border-2 border-yellow-400 rounded checked:bg-yellow-500 						checked:border-yellow-500 cursor-pointer" ${
 									completed ? 'checked' : ''
-								}>
-				<div class="flex justify-between items-center w-full gap-2">
-					<span class="flex-1 ${
-						completed ? 'line-through text-gray-400' : ''
-					}">${text}</span>
-					<span class="text-gray-400 text-sm">${dateKey === this.dateFormat() ? 'Today': dateKey}</span>
-					<span class="text-gray-400">${category}
-					</span>
-				</div>
-                <button class="remove text-red-500">&times;</button>
+								}
+    						/>
+    						<svg
+    							class="absolute left-0 top-0 h-6 w-6 text-white pointer-events-none opacity-0 peer-checked:opacity-100 						transition-opacity"
+    							viewBox="0 0 24 24"
+    							fill="none"
+    							stroke="currentColor"
+    							stroke-width="3"
+    							stroke-linecap="round"
+    							stroke-linejoin="round"
+   						 	>
+    							<polyline points="20 6 9 17 4 12" />
+							</svg>
+						</label>
+
+						<div class="flex justify-between items-center w-full gap-2">
+							<span class="flex-1 
+								${completedCheck}">${text}
+							</span>
+							<span class="text-gray-400 text-sm pt-[1px] ${completedCheck}">${
+								dateKey === this.dateFormat() ? 'Today' : dateKey.replaceAll('-', '/')}
+							</span>
+							<span class="text-gray-400 ${completedCheck}">${category}
+							</span>
+						</div>
+						<button class="text-red-500 hover:text-red-700 cursor-pointer" aria-label="Remove task">
+							<i class="remove fas fa-trash"></i>
+						</button>
     `;
 		this.taskList?.appendChild(item);
 	}
@@ -83,7 +107,7 @@ export class View {
 			const btn = document.createElement('button');
 			btn.textContent = cat;
 			btn.className =
-				'block w-full text-left px-2 py-1 hover:bg-gray-100 text-sm';
+				'block w-full text-left px-2 py-1 hover:bg-yellow-100 text-sm cursor-pointer rounded';
 			btn.addEventListener('click', () => {
 				this.taskCategory.value = cat;
 				this.hideSuggestions();
@@ -111,8 +135,8 @@ export class View {
 	bindToggle(handler) {
 		this.taskList?.addEventListener('change', (e) => {
 			if (e.target.classList.contains('check')) {
-				const id = e.target.closest('[data-id]').dataset.id;
-				const dateKey = e.target.closest('[data-date]').dataset.date;
+				const item = e.target.closest('[data-id]');
+				const { id, date: dateKey } = item.dataset;
 				handler(dateKey, id);
 			}
 		});
@@ -133,7 +157,6 @@ export class View {
 			this.toggleSidebar();
 			e.stopPropagation();
 		});
-
 		this.sidebar.addEventListener('click', (e) => e.stopPropagation());
 
 		document.addEventListener('click', (e) => {
@@ -145,12 +168,14 @@ export class View {
 		this.sidebar.classList.toggle('-translate-x-full');
 		this.sidebar.classList.toggle('translate-x-0');
 		this.backdrop.classList.toggle('hidden');
+		this.navBtn.classList.toggle('hidden');
 	}
 
 	closeSidebar() {
 		this.sidebar.classList.add('-translate-x-full');
 		this.sidebar.classList.remove('translate-x-0');
 		this.backdrop.classList.add('hidden');
+		this.navBtn.classList.remove('hidden');
 	}
 
 	isSidebarOpen() {

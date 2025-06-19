@@ -7,7 +7,7 @@ import { LoginController } from '/src/Login/LoginController.js';
 const loginView = new LoginView();
 const loginController = new LoginController(loginView);
 
-class calendarController {
+class CalendarController {
 	constructor(model, view) {
 		this.model = model;
 		this.view = view;
@@ -17,7 +17,7 @@ class calendarController {
 		this.month = this.currentDate.getMonth();
 		this.year = this.currentDate.getFullYear();
 
-		this.view.bindDayClick(this.hanldeDayClick.bind(this));
+		this.view.bindDayClick(this.handleDayClick.bind(this));
 		this.view.bindAddTask(this.handleAddTask.bind(this));
 		this.view.bindToggleTask(this.handleToggleTask.bind(this));
 		this.view.bindRemoveTask(this.handleRemoveTask.bind(this));
@@ -42,9 +42,8 @@ class calendarController {
 		this.view.renderDayBoxes(
 			this.view.calendarDays,
 			this.view.daysInMonth(this.month),
-			this.view.year,
-			this.month,
-			this.model.tasks
+			this.year,
+			this.month
 		);
 	}
 
@@ -55,11 +54,10 @@ class calendarController {
 		return this.month;
 	}
 
-	hanldeDayClick(e) {
+	handleDayClick(e) {
 		const dayDiv = e.target.closest('[data-date]');
 		if (!dayDiv) return;
 		this.selectedDate = dayDiv.dataset.date;
-		console.log(this.selectedDate);
 		this.view.renderCalendarTasks(
 			this.selectedDate,
 			this.model.loadTasks(this.selectedDate)
@@ -106,4 +104,4 @@ class calendarController {
 }
 
 const view = new View();
-const app = new calendarController(new Model(), new calendarView(view));
+const app = new CalendarController(new Model(), new calendarView(view));

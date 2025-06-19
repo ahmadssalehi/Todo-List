@@ -1,4 +1,3 @@
-// src/controllers/LoginController.js
 export class LoginController {
 	constructor(view) {
 		this.view = view;
