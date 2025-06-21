@@ -2,10 +2,12 @@
 
 A simple responsive To-do list application.
 
-# Wesite environment
+# Website environment
 
-![Homepage](./pic/1.png)
-![Calendar](./pic/2.png)
-![All Tasks page](./pic/3.png)
-![Login modal](./pic/4.png)
-![Calendar task modal](./pic/5.png)
+<p>
+  <img src="./pic/1.png" width="200"/>
+  <img src="./pic/2.png" width="200"/>
+  <img src="./pic/3.png" width="200"/>
+  <img src="./pic/4.png" width="200"/>
+  <img src="./pic/5.png" width="200"/>
+</p>
