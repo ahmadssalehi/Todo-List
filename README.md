@@ -2,9 +2,9 @@
 
 A simple responsive To-do list application.
 
-#Netlify
+# Netlify
 
-todolist226.netlify.app
+<a href='todolist226.netlify.app'>todolist226.netlify.app</a>
 
 # Website environment
 
