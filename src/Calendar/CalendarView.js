@@ -61,15 +61,18 @@ export class calendarView {
 		);
 	}
 
-	renderDayBoxes(container, daysInMonth, year, month) {
+	renderDayBoxes(container, daysInMonth, year, month, tasks) {
 		const dayBoxes = Array.from({ length: daysInMonth }, (_, i) => {
 			const day = i + 1;
 			const dateKey = this.dateFormat(year, month, day);
-			
-			return `<div data-date="${dateKey}" class="h-9 border border-gray-300 rounded bg-white hover:bg-yellow-100 cursor-pointer items-center justify-center flex flex-col">
+			const dayTasks = tasks[dateKey] || [];
+
+			return `<div data-date="${dateKey}" class="border border-gray-300 rounded ${
+				dayTasks.length ? 'bg-yellow-200' : 'bg-white'
+			} hover:bg-yellow-100 cursor-pointer items-center justify-center flex flex-col">
 			<div class="p-2 text-center rounded-lg  cursor-pointer">${day}</div>
 			</div>
-    `; 
+    `;
 		}).join('');
 
 		container.insertAdjacentHTML('beforeend', dayBoxes);
@@ -121,7 +124,7 @@ export class calendarView {
 				})
 				.join('');
 		}
-		this.clearInput()
+		this.clearInput();
 	}
 
 	hideBtns(btn) {

@@ -43,7 +43,8 @@ class CalendarController {
 			this.view.calendarDays,
 			this.view.daysInMonth(this.month),
 			this.year,
-			this.month
+			this.month,
+			this.model.tasks
 		);
 	}
 
