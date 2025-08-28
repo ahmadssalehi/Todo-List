@@ -4,7 +4,7 @@ A simple responsive To-do list application.
 
 # Netlify
 
-<a href='todolist226.netlify.app'>todolist226.netlify.app</a>
+<a href='https://todolist226.netlify.app'>todolist226.netlify.app</a>
 
 # Website environment
 
