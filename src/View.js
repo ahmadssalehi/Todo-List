@@ -6,19 +6,19 @@ export class View {
 		this.taskList = document.querySelector('.task-list');
 		this.addBtn = document.querySelector('.add-btn');
 		this.navBtn = document.querySelector('.nav-btn');
+		this.navBtnContainer = document.querySelector('.nav-btn-container');
 		this.sidebar = document.querySelector('.sidebar');
 		this.backdrop = document.querySelector('.backdrop');
 	}
-	
+
 	dateFormat() {
 		const date = new Date();
 		const year = date.getFullYear();
 		const month = date.getMonth() + 1;
 		const day = date.getDate();
-		return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(
-			2,
-			'0'
-		)}`;
+		return `${year}-${String(month).padStart(2, '0')}-${String(
+			day
+		).padStart(2, '0')}`;
 	}
 
 	getTask() {
@@ -52,34 +52,38 @@ export class View {
 			'task flex p-2 border-b border-gray-300 gap-2 items-center';
 		item.dataset.id = id;
 		item.dataset.date = dateKey;
-		const completedCheck = `${completed ? 'line-through text-gray-400' : ''}`;
+		const completedCheck = `${
+			completed ? 'line-through text-gray-400' : ''
+		}`;
 		item.innerHTML = `
 						<label class="relative inline-flex items-center cursor-pointer">
-    						<input
+							<input
 								type="checkbox"
-    							class="peer check appearance-none h-5 w-5 border-2 border-yellow-400 rounded checked:bg-yellow-500 						checked:border-yellow-500 cursor-pointer" ${
+								class="peer check appearance-none h-5 w-5 border-2 border-yellow-400 rounded checked:bg-yellow-500 checked:border-yellow-500 cursor-pointer" ${
 									completed ? 'checked' : ''
 								}
-    						/>
-    						<svg
-    							class="absolute left-0 top-0 h-6 w-6 text-white pointer-events-none opacity-0 peer-checked:opacity-100 						transition-opacity"
-    							viewBox="0 0 24 24"
-    							fill="none"
-    							stroke="currentColor"
-    							stroke-width="3"
-    							stroke-linecap="round"
-    							stroke-linejoin="round"
-   						 	>
-    							<polyline points="20 6 9 17 4 12" />
+							/>
+							<svg
+								class="absolute left-0 top-0 h-6 w-6 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="3"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								>
+								<polyline points="20 6 9 17 4 12" />
 							</svg>
 						</label>
-
 						<div class="flex justify-between items-center w-full gap-2">
 							<span class="flex-1 
 								${completedCheck}">${text}
 							</span>
 							<span class="text-gray-400 text-sm pt-[1px] ${completedCheck}">${
-								dateKey === this.dateFormat() ? 'Today' : dateKey.replaceAll('-', '/')}
+			dateKey === this.dateFormat()
+				? 'Today'
+				: dateKey.replaceAll('-', '/')
+		}
 							</span>
 							<span class="text-gray-400 ${completedCheck}">${category}
 							</span>
@@ -168,14 +172,14 @@ export class View {
 		this.sidebar.classList.toggle('-translate-x-full');
 		this.sidebar.classList.toggle('translate-x-0');
 		this.backdrop.classList.toggle('hidden');
-		this.navBtn.classList.toggle('hidden');
+		this.navBtnContainer.classList.toggle('hidden');
 	}
 
 	closeSidebar() {
 		this.sidebar.classList.add('-translate-x-full');
 		this.sidebar.classList.remove('translate-x-0');
 		this.backdrop.classList.add('hidden');
-		this.navBtn.classList.remove('hidden');
+		this.navBtnContainer.classList.remove('hidden');
 	}
 
 	isSidebarOpen() {

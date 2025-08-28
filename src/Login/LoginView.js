@@ -10,10 +10,12 @@ export class LoginView {
 
 	showModal() {
 		this.modal.classList.remove('hidden');
+		this.modal.classList.add('flex');
 	}
 
 	hideModal() {
 		this.modal.classList.add('hidden');
+		this.modal.classList.remove('flex');
 	}
 
 	clearInputs() {
@@ -38,7 +40,10 @@ export class LoginView {
 	bindSubmit(handler) {
 		this.form?.addEventListener('submit', (e) => {
 			e.preventDefault();
-			handler(this.emailInput.value.trim(), this.passwordInput.value.trim());
+			handler(
+				this.emailInput.value.trim(),
+				this.passwordInput.value.trim()
+			);
 		});
 	}
 }
