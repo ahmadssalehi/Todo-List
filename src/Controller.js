@@ -1,5 +1,5 @@
-import { Model } from '/src/model.js';
-import { View } from '/src/view.js';
+import { Model } from '/src/Model.js';
+import { View } from '/src/View.js';
 import { LoginView } from '/src/Login/LoginView.js';
 import { LoginController } from '/src/Login/LoginController.js';
 
